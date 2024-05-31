@@ -2,11 +2,13 @@ class Solution {
 public:
     int numJewelsInStones(string jewels, string stones) {
         int res=0;
-        for(int i=0;i<jewels.size();i++){
-            for(int j=0;j<stones.size();j++){
-                if(jewels[i]==stones[j])
-                res++;
-            }
+        unordered_map<char,char> hm;
+        for(auto j : jewels){
+            hm[j] = j;
+        }
+        for(auto s : stones){
+            if(hm.find(s)!=hm.end())
+            res++;
         }
         return res;
     }
