@@ -1,17 +1,18 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        if(s.length()!=t.length())
-        return false;
-        int a[26] = {};
-                for(int i=0;i<s.length();i++){
-                    int temp = (int)s[i];
-                    a[temp-97]++;
-                    temp = (int)t[i];
-                    a[temp-97]--;
-                }
-        for(int i=0;i<26;i++){
-            if(a[i]!=0)
+        unordered_map<char,int> m;
+        for(auto ch : s){
+            m[ch]++;
+        }
+        for(auto ch : t){
+            if(m.find(ch)==m.end())
+            return false;
+            else
+            m[ch]--;
+        }
+        for(auto it : m){
+            if(it.second!=0)
             return false;
         }
         return true;
