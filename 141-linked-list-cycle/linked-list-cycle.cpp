@@ -1,25 +1,20 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        if(head==NULL || head->next == NULL)
-        return false;
-        ListNode *slow,*fast;
-        slow = head;
-        fast = head;
-        while(fast != NULL && fast->next != NULL){
-            slow = slow->next;
-            fast = fast->next->next;
-            if(slow == fast)
-            return true;
+        if (head == NULL || head->next == NULL) {
+            return false;
         }
-        return false;
+        ListNode *temp = head;
+        std::unordered_map<ListNode*, bool> nodeSeen;
+        while (temp != NULL) {
+            // Check if we've seen this node before
+            if (nodeSeen.find(temp) != nodeSeen.end()) {
+                return true; // Cycle detected
+            }
+            // Mark this node as seen
+            nodeSeen[temp] = true;
+            temp = temp->next;
+        }
+        return false; // No cycle detected
     }
 };
