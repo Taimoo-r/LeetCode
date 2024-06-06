@@ -7,10 +7,10 @@ public:
         if(isBadVersion(1))
         return 1;
         int start = 1, end = n,prev,mid;
-        while(start<end){
+        while(start<=end){
             mid = start + (end-start)/2;
             if(isBadVersion(mid)){
-            end = mid;
+            end = mid-1;
             }
             else if(!isBadVersion(mid))
             start = mid+1;
