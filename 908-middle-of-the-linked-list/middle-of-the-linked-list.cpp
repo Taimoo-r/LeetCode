@@ -17,17 +17,9 @@ public:
             temp = temp->next;
             count++;
         }
-        if(count%2!=0){
-             for(int i=0;i<count/2;i++){
+       for(int i=0;i<count/2;i++){
                 head = head->next;
             }
             return head;
-        }
-        else{
-            for(int i=0;i<count/2;i++){
-                head = head->next;
-            }
-            return head;
-        }
     }
 };
