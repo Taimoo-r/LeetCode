@@ -22,9 +22,7 @@ public:
             if(nums[i]=='0')
             power++;
             else if(nums[i]=='1'){
-                res+=(pow(2,power));
-                cout<<res;
-                power++;
+                res+=(pow(2,power++));
             }
         }
         return res;
