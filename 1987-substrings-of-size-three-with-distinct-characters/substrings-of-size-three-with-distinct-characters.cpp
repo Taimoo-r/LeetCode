@@ -4,11 +4,17 @@ public:
         if(s.length()<3)
         return 0;
         int count = 0;
-        int i = 0;
-        for(int j = 2; j < s.length(); j++){
-            if(s[i]!=s[i+1] && s[i]!=s[j] && s[j]!=s[i+1])
+        
+        unordered_set<char> ss;
+        for(int i = 0 ; i <= s.size()-3;i++){
+            // unordered_set<char> ss;
+            for(int j = i; j < 3+i ; j++){
+                
+                ss.insert(s[j]);
+            }
+            if(ss.size()==3)
             count++;
-            i += 1;
+            ss.clear();
         }
         return count;
     }
