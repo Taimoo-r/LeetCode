@@ -1,37 +1,27 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 class MinStack {
 public:
     int tp;
-    map<int, int> mp;
+    map<int,int> mp;
     vector<int> v;
-
     MinStack() {
-        v.reserve(1000);  // Start with a smaller size, and let it grow dynamically if needed
-        tp = -1;
+        v.resize(1000000,0);
+        tp =  -1;
     }
 
     void push(int val) {
-        v.push_back(val);
-        tp++;
+        v[++tp] = val;
         mp[val]++;
     }
     
     void pop() {
-        if (tp >= 0) {
-            int val = v[tp];
-            mp[val]--;
-            if (mp[val] == 0) {
-                mp.erase(val);
-            }
-            v.pop_back();
-            tp--;
-        }
+        mp[v[tp]]--;
+        if(mp[v[tp]]==0)
+        mp.erase(v[tp]);
+        tp--;
     }
     
     int top() {
-            return v[tp];
+        return v[tp];
     }
     
     int getMin() {
