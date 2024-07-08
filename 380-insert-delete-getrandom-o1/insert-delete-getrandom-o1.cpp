@@ -4,7 +4,7 @@ public:
     map<int, int> mp;
 
     RandomizedSet() {
-        srand(time(0));
+        // srand(time(0));
     }
 
     bool insert(int val) {
