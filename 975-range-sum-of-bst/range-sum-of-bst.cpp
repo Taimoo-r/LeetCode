@@ -11,33 +11,18 @@
  */
 class Solution {
 public:
-    static int sum;
-
     int rangeSumBST(TreeNode* root, int low, int high) {
-        sum = 0; // Reset sum before starting the calculation
-        rangeSumBSTHelper(root, low, high);
-        return sum;
+        int s = 0;
+        return sum(root,low,high,&s);
+        
     }
-
-private:
-    void rangeSumBSTHelper(TreeNode* root, int low, int high) {
-        if (root == nullptr) {
-            return;
-        }
-
-        if (root->val >= low) {
-            rangeSumBSTHelper(root->left, low, high);
-        }
-
-        if (root->val >= low && root->val <= high) {
-            sum += root->val;
-            cout << root->val << " ";
-        }
-
-        if (root->val <= high) {
-            rangeSumBSTHelper(root->right, low, high);
-        }
+    int sum(TreeNode* root, int l, int h, int *s){
+        if(!root)
+        return 0;
+        if(root->val >=l && root->val <=h)
+        *s+=root->val;
+        sum(root->left,l,h,s);
+        sum(root->right,l,h,s);
+        return *s;
     }
 };
-int Solution::sum = 0;
-
