@@ -22,10 +22,7 @@ public:
 
             }
             else{
-                int num;
-                stringstream ss(t);
-                ss >> num;
-                s.push(num);
+                s.push(stoi(t));
             }
         }
         return s.top();
