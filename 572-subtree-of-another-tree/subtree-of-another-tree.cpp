@@ -12,14 +12,14 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        if (!root) return false;
-        if (isSameTree(root, subRoot)) return true;
+        if(!root) return false;
+        if(sameTree(root,subRoot)) return true;
         return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
     }
-    
-    bool isSameTree(TreeNode* s, TreeNode* t) {
-        if (!s && !t) return true;
-        if (!s || !t) return false;
-        return s->val == t->val && isSameTree(s->left, t->left) && isSameTree(s->right, t->right);
+    bool sameTree(TreeNode* root, TreeNode* subRoot){
+        if(!root && !subRoot) return true;
+        if(!root || !subRoot) return false;
+        if(root->val != subRoot->val) return false;
+        return sameTree(root->left,subRoot->left) && sameTree(root->right,subRoot->right);
     }
 };
