@@ -19,6 +19,8 @@ public:
     void hasPathSum(TreeNode *root, int t, bool &ans){
         if(!root)
         return;
+        if(ans)
+        return;
         t-=root->val;
         hasPathSum(root->left,t,ans);
         if(!root->left && !root->right && t==0)
