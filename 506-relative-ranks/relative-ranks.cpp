@@ -10,7 +10,7 @@ public:
         }
         
         // Sort the pairs in descending order based on the scores
-        sort(scoreIndexPairs.begin(), scoreIndexPairs.end(), greater<pair<int, int>>());
+        sort(scoreIndexPairs.rbegin(), scoreIndexPairs.rend());
         
         vector<string> ans(n);
         
