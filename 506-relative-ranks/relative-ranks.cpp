@@ -1,28 +1,32 @@
 class Solution {
 public:
     vector<string> findRelativeRanks(vector<int>& score) {
-        map<int,int> mp;
-        for(int i = 0 ; i < score.size() ; i++){
-            mp[score[i]] = i;
-        }
-        priority_queue<int> pq(score.begin(),score.end());
-        vector<string> ans(score.size());
-        int c = 0;
-        while(!pq.empty()){
-            int top = pq.top();
-            pq.pop();
-            c++;
-            if(c==1)
-            ans[mp[top]] = "Gold Medal";
-            else if(c==2)
-            ans[mp[top]] = "Silver Medal";
-            else if(c==3)
-            ans[mp[top]] = "Bronze Medal";
-            else
-            ans[mp[top]] = to_string(c);
-        }
-        return ans;
-
+        int n = score.size();
+        vector<pair<int, int>> scoreIndexPairs;
         
+        // Create a vector of pairs (score, index)
+        for (int i = 0; i < n; i++) {
+            scoreIndexPairs.push_back({score[i], i});
+        }
+        
+        // Sort the pairs in descending order based on the scores
+        sort(scoreIndexPairs.begin(), scoreIndexPairs.end(), greater<pair<int, int>>());
+        
+        vector<string> ans(n);
+        
+        // Assign ranks based on the sorted order
+        for (int i = 0; i < n; i++) {
+            if (i == 0) {
+                ans[scoreIndexPairs[i].second] = "Gold Medal";
+            } else if (i == 1) {
+                ans[scoreIndexPairs[i].second] = "Silver Medal";
+            } else if (i == 2) {
+                ans[scoreIndexPairs[i].second] = "Bronze Medal";
+            } else {
+                ans[scoreIndexPairs[i].second] = to_string(i + 1);
+            }
+        }
+        
+        return ans;
     }
 };
