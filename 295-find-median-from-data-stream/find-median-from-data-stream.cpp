@@ -1,3 +1,12 @@
+#pragma GCC optimize("O3")
+#pragma GCC target("arch=znver3")
+namespace _xd {
+    static const auto _ = [] {
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(nullptr);
+        return 0;
+    }();
+}
 class MedianFinder {
 public:
     priority_queue<int> max;
