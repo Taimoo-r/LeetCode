@@ -7,7 +7,7 @@ public:
         return res;
         
     }
-    void helper(vector<int> nums, int target, int index, int sum, vector<int> comb){
+    void helper(vector<int> nums, int target, int index, int sum, vector<int>& comb){
         if(sum==target){
             res.push_back(comb);
             return;
