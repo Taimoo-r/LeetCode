@@ -1,29 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> res;
-
     vector<vector<int>> combinationSum(vector<int>& nums, int target) {
-        vector<int> currCombo; // Initialize an empty vector to store the current combination
-        helper(nums, target, 0, 0, currCombo);
+        vector<int> currCom;
+        helper(nums,target,0,0, currCom);
         return res;
+        
     }
-
-    void helper(vector<int>& nums, int target, int currSum, int currIndex, vector<int>& currCombo) {
-        if (currSum == target) {
-            res.push_back(currCombo);
-            return;  // Return early after finding a valid combination
+    void helper(vector<int> nums, int target, int index, int sum, vector<int> comb){
+        if(sum==target){
+            res.push_back(comb);
+            return;
         }
-
-        if (currSum > target || currIndex >= nums.size()) {
-            return;  // If sum exceeds target or we've checked all numbers, return
+        if(sum > target || index >= nums.size()){
+            return;
         }
-
-        // Include the current number in the combination and recurse
-        currCombo.push_back(nums[currIndex]);
-        helper(nums, target, currSum + nums[currIndex], currIndex, currCombo);
-
-        // Exclude the current number from the combination (backtrack) and recurse
-        currCombo.pop_back();
-        helper(nums, target, currSum, currIndex + 1, currCombo);
+        comb.push_back(nums[index]);
+        helper(nums, target, index,sum + nums[index], comb);
+        comb.pop_back();
+        helper(nums,target, index + 1, sum , comb);
     }
 };
