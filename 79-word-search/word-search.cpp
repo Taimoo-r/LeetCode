@@ -13,7 +13,7 @@ public:
         }
         return false;
     }
-    bool helper(vector<vector<char>>& board, string word, int row, int col, int index){
+    bool helper(vector<vector<char>>& board, string& word, int row, int col, int index){
         if(index == word.size())
         return true;
         if(row >= board.size() || row < 0 || col >= board[0].size() || col < 0 || board[row][col]!=word[index])
