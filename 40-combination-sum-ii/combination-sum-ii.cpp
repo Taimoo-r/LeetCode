@@ -1,6 +1,5 @@
 #pragma GCC optimize("O3")
 #pragma GCC target("arch=znver3")
-
 namespace _xd {
     static const auto _ = [] {
         std::ios_base::sync_with_stdio(false);
@@ -8,7 +7,6 @@ namespace _xd {
         return 0;
     }();
 }
-
 class Solution {
 public:
     vector<vector<int>> res;
@@ -20,7 +18,6 @@ public:
         helper(nums, target, 0, 0, comb, set);
         return res;
     }
-
     void helper(vector<int>& nums, int target, int index, int sum, vector<int>& comb, set<vector<int>>& set) {
         if (sum == target) {
             if (set.find(comb) == set.end()) {
