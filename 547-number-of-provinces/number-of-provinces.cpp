@@ -1,22 +1,22 @@
 class Solution {
 public:
     int findCircleNum(vector<vector<int>>& isConnected) {
-        int res = 0;
-        set<int> visit;
-        for(int i = 0; i < isConnected.size(); i++) {  // Start from index 0
-            if(!visit.count(i)) {
+       int res=0;
+       const int n = isConnected.size();
+       set<int> visited;
+       for(int i = 0 ; i < n ; i++){
+            if(!visited.count(i)){
                 res++;
-                dfs(isConnected, visit, i);
+                dfs(isConnected, visited, i);
             }
-        }
-        return res;
+       }
+       return res;
     }
-
-    void dfs(vector<vector<int>>& isConnected, set<int>& visit, int source) {  // Pass by reference
-        visit.insert(source);
-        for(int i = 0; i < isConnected.size(); i++) {
-            if(isConnected[source][i] == 1 && !visit.count(i)) {  // Check connection and visit status
-                dfs(isConnected, visit, i);
+    void dfs(vector<vector<int>> &isConnected, set<int>& visited, int source){
+        visited.insert(source);
+        for(int i = 0 ; i < isConnected.size() ; i++){
+            if(isConnected[source][i]==1 && !visited.count(i)){
+                dfs(isConnected, visited, i);
             }
         }
     }
