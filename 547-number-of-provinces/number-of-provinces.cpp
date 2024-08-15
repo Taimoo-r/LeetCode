@@ -1,22 +1,22 @@
 class Solution {
 public:
-    int findCircleNum(vector<vector<int>>& isConnected) {
-       int res=0;
-       const int n = isConnected.size();
-       set<int> visited;
-       for(int i = 0 ; i < n ; i++){
-            if(!visited.count(i)){
+    int findCircleNum(vector<vector<int>>& con) {
+        int res=0;
+        set<int> visit;
+        cout<<con.size();
+        for(int i = 0; i < con.size(); i++){
+            if(!visit.count(i)){
                 res++;
-                dfs(isConnected, visited, i);
+                dfs(con, visit, i);
             }
-       }
-       return res;
+        }
+        return res;
     }
-    void dfs(vector<vector<int>> &isConnected, set<int>& visited, int source){
-        visited.insert(source);
-        for(int i = 0 ; i < isConnected.size() ; i++){
-            if(isConnected[source][i]==1 && !visited.count(i)){
-                dfs(isConnected, visited, i);
+    void dfs(vector<vector<int>> &con, set<int> &visit, int source){
+        visit.insert(source);
+        for(int i = 0 ; i < con.size(); i++){
+            if(con[source][i]==1 && !visit.count(i)){
+                dfs(con, visit, i);
             }
         }
     }
