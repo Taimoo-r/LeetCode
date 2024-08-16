@@ -1,28 +1,27 @@
 class Solution {
 public:
     int numIslands(vector<vector<char>>& grid) {
-        set<pair<int,int>> s;
-        int res = 0;
-        for(int row = 0 ; row < grid.size(); row++){
-            for(int col = 0 ; col < grid[row].size(); col++){
-                if(!s.count({row,col}) && grid[row][col]=='1'){
-                    res++;
-                    dfs(grid, s, row, col);
+        int m = grid.size();
+        int n = grid[0].size();
+        int cnt = 0;
+        for(int row = 0 ; row < m ; row++){
+            for(int col = 0 ; col < n ; col++){
+                if(grid[row][col]=='1'){
+                    cnt++;
+                    dfs(grid, row, col);
                 }
             }
         }
-        return res;
+        return cnt;
     }
-    void dfs(vector<vector<char>>& grid, set<pair<int,int>>& s, int row, int col){
-        s.insert({row,col});
-        vector<pair<int,int>> directions = {{0,1}, {0,-1}, {1,0}, {-1, 0}};
-        for(auto dir : directions){
-            int drow = row + dir.first;
-            int dcol = col + dir.second;
-            if(drow >= 0 && drow < grid.size() && dcol >= 0 && dcol < grid[drow].size() && grid[drow][dcol]=='1' && !s.count({drow, dcol})){
-                s.insert({drow,dcol});
-                dfs(grid, s, drow, dcol);
-            }
-        }
+    
+    void dfs(vector<vector<char>>& grid, int row, int col){
+        if(row >= 0 && row < grid.size() && col >= 0 && col < grid[0].size() && grid[row][col]!='0')
+        grid[row][col] = '0';
+        else return;
+        dfs(grid, row, col + 1);
+        dfs(grid, row, col - 1);
+        dfs(grid, row+1, col);
+        dfs(grid, row-1, col);
     }
 };
