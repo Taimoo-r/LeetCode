@@ -13,24 +13,47 @@ public:
     ListNode* rotateRight(ListNode* head, int k) {
         if (!head)
             return head;
-            ListNode *temp = head;
-            vector<int> v;
-            while(temp){
-                v.emplace_back(temp->val);
-                temp = temp->next;
-            }
-            k%=v.size();
+        ListNode* o = head;
+        int n = 0;
+        while(o){
+            n++;
+            o = o->next;
+
+        }
+            k%=n;
         while (k--) {
-            int last = v.back();
-            v.pop_back();
-            v.insert(v.begin(), last);
+            int containTwo = 0;
+            ListNode* check = head;
+            while (check) {
+                check = check->next;
+                containTwo++;
+                if (containTwo > 2)
+                    break;
+            }
+            if (containTwo > 2) {
+                ListNode* temp = head->next;
+                ListNode* currHead = head;
+                ListNode* toRotate = head->next;
+
+                while (temp->next->next) {
+                    temp = temp->next;
+                }
+                toRotate = temp->next;
+                temp->next = nullptr;
+                ListNode* headNext = head;
+                head = toRotate;
+                head->next = headNext;
+            }
+            else if(containTwo == 2) {
+                ListNode *first = head;
+                ListNode *second = head->next;
+                head = second;
+                head->next = first;
+                first->next = nullptr;
+            }
+            else
+            return head;
         }
-        ListNode* myhead = new ListNode(v[0]);
-        ListNode* t = myhead;
-        for(int i = 1 ; i < v.size() ; i++){
-            t->next = new ListNode(v[i]);
-            t = t->next;
-        }
-        return myhead;
+        return head;
     }
 };
