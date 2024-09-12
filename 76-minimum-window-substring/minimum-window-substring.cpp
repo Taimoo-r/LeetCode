@@ -1,6 +1,9 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(0);
+
         if(s.size() < t.size())
         return "";
         unordered_map<char,int> original;
