@@ -1,13 +1,14 @@
 class Solution {
 public:
     int countConsistentStrings(string allowed, vector<string>& words) {
-        ios_base::sync_with_stdio(false);
+        // Store allowed characters in a set
         unordered_set<char> allow(allowed.begin(), allowed.end());
+        
         int count = 0;
-        for(int i = 0 ; i < words.size(); i++){
+        for(const auto& word : words){
             bool ok = true;
-            for(int j = 0 ; j < words[i].size(); j++){
-                if(!allow.count(words[i][j])){
+            for(const auto& ch : word){
+                if(!allow.count(ch)){
                     ok = false;
                     break;
                 }
@@ -16,6 +17,5 @@ public:
                 count++;
         }
         return count;
-        
     }
 };
