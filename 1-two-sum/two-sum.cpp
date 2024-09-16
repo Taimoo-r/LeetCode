@@ -11,7 +11,6 @@ public:
             if(mp.count(find) && mp[find]!=i)
                 return {i,mp[find]};
         }
-        vector<int> ans;
-        return ans;
+        return {};
     }
 };
