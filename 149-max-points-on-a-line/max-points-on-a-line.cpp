@@ -18,16 +18,10 @@ public:
                 int dy = p[j][1] - p[i][1]; 
                 int dx = p[j][0] - p[i][0]; 
                 
-                if (dx == 0) {
-                    slopes["inf"]++; 
-                } else {
+                 {
                     int g = gcd(dy, dx);
                     dy /= g; 
                     dx /= g; 
-                    if (dx < 0) { 
-                        dy = -dy;
-                        dx = -dx;
-                    }
                     string slopeKey = to_string(dy) + "/" + to_string(dx);
                     slopes[slopeKey]++;
                 }
