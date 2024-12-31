@@ -7,7 +7,6 @@ public:
             d.push_front(d[n-1]);
             d.pop_back();
         }
-        nums.assign(d.begin(), d.end());
-        
+        nums.assign(d.begin(), d.end());  
     }
 };
