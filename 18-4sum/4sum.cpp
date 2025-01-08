@@ -42,7 +42,7 @@ public:
                 if(rr > ll + 1 && nums[rr]==nums[rr - 1]) continue;
                 int l = rr + 1, r = nums.size() - 1;
                 while(l < r){
-                    long long sum = (long long)nums[ll]+(long long)nums[rr]+(long long)nums[l]+(long long)nums[r];
+                    long sum = ( long)nums[ll]+( long)nums[rr]+( long)nums[l]+( long)nums[r];
                     if(sum == t){
                         ans.push_back({nums[ll],nums[rr],nums[l],nums[r]});
                         while(l < r && nums[l] == nums[l+1]) l++;
