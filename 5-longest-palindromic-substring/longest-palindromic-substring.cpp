@@ -1,30 +1,36 @@
-
-
 class Solution {
 public:
     string longestPalindrome(string s) {
-        if (s.empty()) return "";
         int n = s.size();
-        int start = 0, maxLength = 1;
-
-        auto expandAroundCenter = [&](int left, int right) {
-            while (left >= 0 && right < n && s[left] == s[right]) {
-                left--;
-                right++;
+        string longest = "";
+        
+        for (int i = 0; i < n; i++) {
+            // Handle odd-length palindromes
+            string ans = "";
+            ans += s[i];
+            int l = i - 1, r = i + 1;
+            while (l >= 0 && r < n && s[l] == s[r]) {
+                ans = s[l] + ans + s[r];
+                l--, r++;
             }
-            int len = right - left - 1;
-            if (len > maxLength) {
-                start = left + 1;
-                maxLength = len;
-            }
-        };
+            longest = ans.size() > longest.size() ? ans : longest;
 
-        for (int i = 0; i < n; ++i) {
-            expandAroundCenter(i, i);       // Odd length palindromes
-            expandAroundCenter(i, i + 1);   // Even length palindromes
+            // Handle even-length palindromes
+            int j = i;
+            ans = "";
+            while (j < n && s[i] == s[j]) {
+                ans += s[j];
+                j++;
+            }
+            l = i - 1;
+            r = j; // Continue expanding outward
+            while (l >= 0 && r < n && s[l] == s[r]) {
+                ans = s[l] + ans + s[r];
+                l--, r++;
+            }
+            longest = ans.size() > longest.size() ? ans : longest;
         }
 
-        return s.substr(start, maxLength);
+        return longest;
     }
 };
-
