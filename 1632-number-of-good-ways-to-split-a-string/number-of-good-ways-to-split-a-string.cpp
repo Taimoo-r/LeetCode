@@ -13,7 +13,6 @@ public:
             sl[s[r]]++;
             sr[s[r]]--;
             if(sr[s[r]]==0) sr.erase(s[r]);
-            cout<<"After : "<<sl.size()<<"=="<<sr.size()<<endl;
             l++;
             if(r + 1 < n) r++;
         }
