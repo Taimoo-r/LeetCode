@@ -10,7 +10,6 @@ public:
     //     return ans;
     // }
     int minBitFlips(int start, int goal) {
-        int mi = start^goal;
-        return __builtin_popcount(mi);
+        return __builtin_popcount(start^goal);
     }
 };
