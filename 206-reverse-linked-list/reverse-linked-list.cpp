@@ -17,11 +17,9 @@ public:
             v.push_back(head->val);
             head = head->next;
         }
-        for(auto &it : v) cout<<it;
         ListNode* newHead = new ListNode(v.back());
         ListNode* temp = newHead;
         for(int i = v.size()-2 ; i >= 0 ; i--){
-            cout<<v[i];
             temp->next = new ListNode(v[i]);
             temp = temp->next;
         }
