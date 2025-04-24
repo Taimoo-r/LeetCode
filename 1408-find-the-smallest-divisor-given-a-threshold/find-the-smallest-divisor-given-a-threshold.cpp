@@ -6,7 +6,6 @@ public:
         for(auto &it : nums){
             result += ceil((it*1.0)/mid);
         }
-        cout<<result<<' ';
         return result;
     }
 
