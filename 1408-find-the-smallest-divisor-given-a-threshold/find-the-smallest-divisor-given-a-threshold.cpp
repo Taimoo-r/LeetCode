@@ -1,28 +1,28 @@
 class Solution {
 public:
-
-    int calc(vector<int>& nums, int mid){
-        int result = 0;
-        for(auto &it : nums){
-            result += ceil((it*1.0)/mid);
-        }
-        return result;
-    }
-
     int smallestDivisor(vector<int>& nums, int threshold) {
-        int left = 1, right = 1e6;
-        int res = 1;
-
-        while(left <= right){
-            int mid = left + (right - left)/2;
-
-            if(calc(nums, mid) <= threshold){
-                right = mid - 1 ;
-                res = mid;
+        auto calc = [&](int mid) {
+            int result = 0;
+            for (int it : nums) {
+                result += (it + mid - 1) / mid; // Optimized ceil
             }
-            else
+            return result;
+        };
+
+        int left = 1, right = *max_element(nums.begin(), nums.end());
+        int res = right;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (calc(mid) <= threshold) {
+                res = mid;
+                right = mid - 1;
+            } else {
                 left = mid + 1;
+            }
         }
+
         return res;
     }
 };
