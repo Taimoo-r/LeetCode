@@ -2,24 +2,6 @@
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-    //     nums1.insert(nums1.end(),nums1.end(),nums2.end());
-    //     int n = nums1.size();
-    //     for(int i=0;i<nums1.size()-1;i++){
-    //         for(int j=i+1;j<nums1.size();j++){
-    //             if(nums1[i]>nums1[j]){
-    //                 int temp = nums1[i];
-    // nums1[i] = nums1[j];
-    // nums1[j] = temp;
-    //             }
-
-    //         }
-    //     }
-    //     if(nums1.size()/2!=0){
-    //         return nums1[nums1.size()+1];
-    //     }
-    //     else
-    //     return (double)(nums1[nums1.size()/2] + (nums1[(nums1.size()/2)+1])/2.0);
-    // }
     
     vector<int> merged;
         int i = 0, j = 0;
