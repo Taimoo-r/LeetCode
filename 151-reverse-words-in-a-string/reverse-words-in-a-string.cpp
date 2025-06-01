@@ -3,13 +3,6 @@ public:
     string reverseWords(string s) {
         vector<string> words;
         string word = "";
-        int start, end;
-        for(start = 0 ; start < s.size() ; start++){
-            if(s[start] != ' ') break;
-        }
-        for(end = s.size() - 1 ; end >= 0 ; end--){
-            if(s[end] !=' ') break;
-        }
         string ans = "";
         for(auto &it : s){
             if(it == ' ' && word.size() > 0){
