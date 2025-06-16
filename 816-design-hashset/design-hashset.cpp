@@ -2,18 +2,19 @@ class MyHashSet {
 public:
     vector<int> v;
     MyHashSet() {
-        v.resize(1000001,0);
+        v.resize(1e6+1, -1);
     }
     
     void add(int key) {
-        v[key] = 1;
+        v[key] = key;
     }
     
     void remove(int key) {
-       v[key] = 0;
+        v[key] = -1;
     }
+    
     bool contains(int key) {
-       return v[key];
+        return v[key] != -1;
     }
 };
 
