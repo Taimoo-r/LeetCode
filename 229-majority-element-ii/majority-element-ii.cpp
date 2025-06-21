@@ -2,14 +2,17 @@ class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
         int more = nums.size()/3;
+        set<int> st;
         map<int, int> mp;
-        for(auto &it : nums) mp[it]++;
-
         vector<int> v;
-
-        for(auto [a, b] : mp){
-            if(b>more) v.push_back(a);
+        for(auto &it : nums) {
+            mp[it]++;
+            if(mp[it] > more && !st.count(it)) {
+                v.push_back(it);
+                st.insert(it);
+            }
         }
+
         return v;
     }
 };
