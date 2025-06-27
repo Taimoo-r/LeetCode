@@ -21,10 +21,6 @@ public:
                 nextMax[j] = nMax;
             }
         }
-
-        for(auto &it : prevMax) cout<<it<<" ";
-        cout<<endl;
-        for(auto &it : nextMax) cout<<it<<" ";
         int totalAmount = 0;
         for(int i = 0 ; i < n ; i++){
             if(prevMax[i] == -1 || nextMax[i] == -1) continue;
