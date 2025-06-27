@@ -1,27 +1,38 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-        stack<int> st; // Monotonic decreasing stack (stores indices)
-        int water = 0;
         int n = height.size();
-
-        for (int i = 0; i < n; i++) {
-            // If the current height is greater than the stack’s top, process trapped water
-            while (!st.empty() && height[i] > height[st.top()]) {
-                int bottom = st.top();
-                st.pop();
-                
-                if (st.empty()) break; // No left boundary
-
-                int left = st.top();  // Left boundary index
-                int width = i - left - 1;  // Distance between left and right boundary
-                int bounded_height = min(height[left], height[i]) - height[bottom]; // Water height
-                
-                water += width * bounded_height;
+        vector<int> prevMax(n), nextMax(n);
+        int pMax = height[0], nMax = height[n-1];
+        prevMax[0] = -1, nextMax[n-1] = -1;
+        for(int i = 1, j = n - 2 ; i < n ; i++, j--){ // i've done this so i can track previous & next maximum to calculate how much amount of water can be hold by the current block. 
+            if(height[i] >= pMax){
+                pMax = height[i];
+                prevMax[i] = -1;
             }
-
-            st.push(i);
+            else if(height[i] < pMax){
+                prevMax[i] = pMax;
+            }
+            if(height[j] >= nMax){
+                nMax = height[j];
+                nextMax[j] = -1;
+            }
+            else if(height[j] < nMax){
+                nextMax[j] = nMax;
+            }
         }
-        return water;
+
+        for(auto &it : prevMax) cout<<it<<" ";
+        cout<<endl;
+        for(auto &it : nextMax) cout<<it<<" ";
+        int totalAmount = 0;
+        for(int i = 0 ; i < n ; i++){
+            if(prevMax[i] == -1 || nextMax[i] == -1) continue;
+            totalAmount+=(min(prevMax[i], nextMax[i]) - height[i]);
+        }
+        return totalAmount;
+
+
+        
     }
 };
