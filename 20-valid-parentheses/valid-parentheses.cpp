@@ -10,6 +10,6 @@ public:
             (st.top() == '[' && it == ']'))) st.pop();
             else return false;
         }
-        return st.empty() ? true : false;
+        return st.empty();
     }
 };
