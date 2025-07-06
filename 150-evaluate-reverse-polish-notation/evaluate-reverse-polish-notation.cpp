@@ -1,33 +1,26 @@
 class Solution {
 public:
+    int eval(int a, int b, string op){
+        if (op == "+") return a+b;
+        if (op == "-") return b-a;
+        if (op == "*") return a*b;
+        return b/a; 
+        }
+    
     int evalRPN(vector<string>& tokens) {
-        stack<int> s;
-        for(auto t : tokens){
-            if(t=="+" || t=="-" || t=="*" || t=="/"){
-                int b = s.top();
-                s.pop();
-                int a = s.top();
-                s.pop();
-                if(t=="+")
-                s.push(a+b);
-                else if(t=="-")
-                s.push(a-b);
-                else if(t=="*")
-                s.push(a*b);
-                else{
-                    if(b!=0){
-                        s.push(a/b);
-                    }
-                }
-
-            }
-            else{
-                int num;
-                stringstream ss(t);
-                ss >> num;
-                s.push(num);
+        stack<int> st;
+        for(auto &it : tokens){
+            if(it == "+" || it == "-" || it == "*" || it == "/"){
+                int a = st.top();
+                st.pop();
+                int b = st.top();
+                st.pop();
+                st.push(eval(a, b, it));
+            } else{
+                st.push(stoi(it));
             }
         }
-        return s.top();
+        return st.top();
+        
     }
 };
