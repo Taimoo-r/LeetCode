@@ -11,31 +11,26 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode *temp = list1;
-        vector<int> v;
-        while(temp){
-            v.emplace_back(temp->val);
-            temp = temp->next;
-        }
-        temp = list2;
-        while(temp){
-            v.emplace_back(temp->val);
-            temp = temp->next;
-        }
-        sort(v.begin(),v.end());
-        ListNode *head = nullptr;
-        ListNode *curr = head;
-        for(int i=0;i<v.size();i++){
-            if(i==0){
-                head = new ListNode(v[i]);
-                curr = head;
+        if(list2 && !list1) return list2;
+        if(list1 && !list2) return list1;
+        ListNode dummy;
+        ListNode* temp = &dummy;
+        int i = 0;
+        while(list1 && list2){
+            cout<<++i;
+            if(list1->val > list2->val){
+                temp->next = list2;
+                list2 = list2->next;
             }
-            else{
-                curr->next = new ListNode(v[i]);
-                curr = curr->next;
+            else {
+                temp->next = list1;
+                list1 = list1->next;
             }
+            temp = temp->next;
 
         }
-        return head;
+        temp->next = list1 ? list1 : list2;
+        return dummy.next;
+        
     }
 };
