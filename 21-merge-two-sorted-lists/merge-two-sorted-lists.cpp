@@ -17,7 +17,6 @@ public:
         ListNode* temp = &dummy;
         int i = 0;
         while(list1 && list2){
-            cout<<++i;
             if(list1->val > list2->val){
                 temp->next = list2;
                 list2 = list2->next;
