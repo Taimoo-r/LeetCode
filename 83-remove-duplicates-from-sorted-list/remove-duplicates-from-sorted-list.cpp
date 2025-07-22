@@ -11,7 +11,7 @@
 class Solution {
 public:
     ListNode* helper(ListNode* head){
-        if(head && head->next == nullptr) return head;
+        if(!head || head->next == nullptr) return head;
 
         ListNode* temp = helper(head->next);
 
@@ -24,7 +24,7 @@ public:
 
     }
     ListNode* deleteDuplicates(ListNode* head) {
-        if(!head) return head;
+        // if(!head) return head;
         return helper(head);
     }
 };
