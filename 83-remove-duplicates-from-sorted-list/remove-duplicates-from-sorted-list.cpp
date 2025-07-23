@@ -11,18 +11,18 @@
 class Solution {
 public:
     ListNode* helper(ListNode* head){
-        if(head->next == nullptr) return head;
-
-        ListNode* temp = helper(head->next);
-
-        if(head->val == temp->val){
-            if(temp->next){
-                head->next = temp->next;
-            } else head->next = nullptr;
-        } 
-        return head;
-
-    }
+            if(head->next == nullptr) return head;
+            ListNode* temp = helper(head->next);
+            if(head->val == temp->val){
+                if(temp->next){
+                    head->next = temp->next;
+                }
+                else {
+                    head->next = nullptr;
+                }
+            }
+            return head;
+        }
     ListNode* deleteDuplicates(ListNode* head) {
         if(!head) return head;
         return helper(head);
