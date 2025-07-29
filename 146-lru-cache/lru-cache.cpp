@@ -1,6 +1,6 @@
 class LRUCache {
 public:
-    map<int, pair<list<int>::iterator, int>> mp;
+    unordered_map<int, pair<list<int>::iterator, int>> mp;
     list<int> dd;
     int size;
     LRUCache(int capacity) {
