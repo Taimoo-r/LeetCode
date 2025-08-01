@@ -10,15 +10,14 @@
 
 class Solution {
 public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(!root) return nullptr;
-        if(root == p || root == q) return root; // p yan q exist at upper from p/q
-        TreeNode* left = lowestCommonAncestor(root->left, p, q);
-        TreeNode* right = lowestCommonAncestor(root->right, p, q);
-
-        if(left && right) return root;
-
-        if(left) return left;
-        return right;
+    TreeNode* lowestCommonAncestor(TreeNode* curr, TreeNode* p, TreeNode* q) {
+        while(curr){
+            if(curr->val > p->val  && curr->val > q->val){
+                curr = curr->left;
+            } else if(curr->val < p->val && curr->val < q->val)
+                curr = curr->right;
+            else return curr;
+        }
+        return nullptr;
     }
 };
