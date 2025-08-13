@@ -1,14 +1,14 @@
 class Solution {
 public:
+    unordered_map<int, int> mp;
     int climbStairs(int n) {
-        vector<int> rev(n+1, -1);
-        return helper(n, rev);
+        return helper(n);
     }
-    int helper(int n , vector<int> &rev){
+    int helper(int n){
         if(n == 0) return 1;
         if(n < 0) return 0;
-        if(rev[n] != -1) return rev[n];
-        rev[n] = helper(n - 1, rev) + helper(n-2, rev);
-        return rev[n];
+        if(mp.count(n)) return mp[n];
+        mp[n] = helper(n-1) + helper(n-2);
+        return mp[n];
     }
 };
