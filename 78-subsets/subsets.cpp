@@ -13,10 +13,9 @@ public:
 
         curr.push_back(nums[i]);
 
-        if(!st.count(curr)) {
+        
             ans.push_back(curr);
-            st.insert(curr);
-        }
+            
         help(nums, i+1, curr);
         curr.pop_back();
         help(nums, i+1, curr);
