@@ -8,7 +8,7 @@ public:
         return ans;
     }
 
-    void help(vector<int>& cand, int t, int i, vector<int> curr, int sum){
+    void help(vector<int>& cand, int t, int i, vector<int>& curr, int sum){
         if(i >= cand.size() || sum > t) return;
         curr.push_back(cand[i]);
         if(sum+cand[i] == t){
