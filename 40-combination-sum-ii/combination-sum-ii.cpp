@@ -1,46 +1,34 @@
-#pragma GCC optimize("O3")
-#pragma GCC target("arch=znver3")
-namespace _xd {
-    static const auto _ = [] {
-        std::ios_base::sync_with_stdio(false);
-        std::cin.tie(nullptr);
-        return 0;
-    }();
-}
 class Solution {
 public:
-    vector<vector<int>> res;
-
-    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
-        sort(nums.begin(), nums.end());
-        set<vector<int>> set;
-        vector<int> comb;
-        helper(nums, target, 0, 0, comb, set);
-        return res;
+    vector<vector<int>> ans;
+    vector<int> curr;
+    vector<vector<int>> combinationSum2(vector<int>& cand, int t) {
+        sort(cand.begin(), cand.end());
+        help(cand, t, 0, t);
+        return ans;
     }
-    void helper(vector<int>& nums, int target, int index, int sum, vector<int>& comb, set<vector<int>>& set) {
-        if (sum == target) {
-            if (set.find(comb) == set.end()) {
-                set.insert(comb);
-                res.push_back(comb);
-            }
+
+    void help(vector<int>& cand, int t, int i, int rem){
+
+
+        if(rem == 0){
+            ans.push_back(curr);
             return;
         }
 
-        if (sum > target || index >= nums.size()) {
-            return;
+       
+        // 1, 1, 2, 5, 6, 7, 10
+
+        for(int j = i ; j < cand.size() ; j++){
+            if(cand[j] > rem) break;
+            if(j > i && cand[j] == cand[j-1]) continue;
+
+            curr.push_back(cand[j]);
+            for(auto &it : curr) cout<<it<<" ";
+
+            help(cand, t, j+1, rem-cand[j]);
+            curr.pop_back();
         }
-
-        // Inclusion
-        comb.push_back(nums[index]);
-        helper(nums, target, index + 1, sum + nums[index], comb, set);
-
-        // Exclusion
-        comb.pop_back();
-        while (index + 1 < nums.size() && nums[index] == nums[index + 1]) {
-            index++;
-        }
-
-        helper(nums, target, index + 1, sum, comb, set);
     }
+
 };
