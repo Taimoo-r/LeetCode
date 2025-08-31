@@ -1,23 +1,23 @@
 class Solution {
 public:
+    vector<vector<int>> ans;
+    vector<int> curr;
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        vector<vector<int>> ans;
-        vector<int> curr;
-        ans.push_back({});
-        set<vector<int>> st;
         sort(nums.begin(), nums.end());
-        gen(nums, curr, ans, 0, st);
+        ans.push_back({});
+        help(nums, 0);
         return ans;
     }
-    void gen(vector<int> &nums, vector<int> &curr, vector<vector<int>> &ans, int i, set<vector<int>> &st){
-        if(i>=nums.size()) return;
-        curr.push_back(nums[i]);
-        if(!st.count(curr)){
+
+    void help(vector<int>& nums, int start){
+
+        for(int i = start ; i < nums.size() ; i++){
+            if(i > start && nums[i] == nums[i-1]) continue;
+
+            curr.push_back(nums[i]);
             ans.push_back(curr);
-            st.insert(curr);
+            help(nums, i+1);
+            curr.pop_back();
         }
-        gen(nums, curr, ans, i+1, st);
-        curr.pop_back();
-        gen(nums, curr, ans, i+1, st);
     }
 };
