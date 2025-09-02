@@ -1,36 +1,31 @@
 class Solution {
 public:
-    string getString(char ch) {
-        if(ch == '2') return "abc";
-        else if(ch == '3') return "def";
-        else if(ch == '4') return "ghi";
-        else if(ch == '5') return "jkl";
-        else if(ch == '6') return "mno";
-        else if(ch == '7') return "pqrs";
-        else if(ch == '8') return "tuv";
-        else if(ch == '9') return "wxyz";
-        return "";
+    vector<string> ans;
+    string get(char c){
+        if(c == '2') return "abc";
+        else if(c == '3') return "def";
+        else if(c == '4') return "ghi";
+        else if(c == '5') return "jkl";
+        else if(c == '6') return "mno";
+        else if(c == '7') return "pqrs";
+        else if(c == '8') return "tuv";
+        else return "wxyz";
     }
-
     vector<string> letterCombinations(string digits) {
-        if(digits.empty()) return {};  // Handle empty input
-        
-        vector<string> result;
-        result.push_back("");  // Initialize with empty string for combinations
-
-        for(char digit : digits) {
-            string letters = getString(digit);
-            vector<string> temp;
-            
-            for(string &comb : result) {
-                for(char letter : letters) {
-                    temp.push_back(comb + letter);
-                }
-            }
-            
-            result = temp; 
+        if(digits.size() <= 0) return {};
+        help(digits, 0, "");
+        return ans;
+    }
+    void help(string digits, int i, string curr){
+        if(curr.size() == digits.size()){
+            ans.push_back(curr);
+            return;
         }
 
-        return result;
+        string str = get(digits[i]);
+
+        for(auto &it : str){
+            help(digits, i+1, curr+it);
+        } 
     }
 };
