@@ -1,52 +1,43 @@
 class Solution {
 public:
-    bool isSafe(vector<vector<string>> &board, int row, int col){
-        // horizontal
-        int n = board.size();
-        // vertical
-        for(int i = 0 ; i < n ; i++)
-            if(board[i][col]=="Q") return false;
-        // primary diagnoal (back)
-        for(int c = col, r = row ; c >= 0 && r >= 0; c--, r--)
-            if(board[r][c]=="Q") return false;
-        // primary diagnoal (front)
-        for(int c = col, r = row ; c < n && r < n; c++, r++)
-                if(board[r][c]=="Q") return false;
-        // secondary diagnoal (back)
-        for(int c = col, r = row ; c < n && r >= 0; c++, r--)
-                if(board[r][c]=="Q") return false;
-        // secondary diagnol (front)
-        for(int c = col, r = row ; c >= 0 && r < n; c--, r++)
-                if(board[r][c]=="Q") return false;
-        return true;    
-    }
+    vector<vector<string>> ans;
     vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>> ans;
-        vector<vector<string>> board(n, vector<string>(n, "."));
-        gen(board, ans, 0, 0, n);
+        vector<string> board(n, string(n, '.'));
+        help(0, board);
         return ans;
     }
-    void gen(vector<vector<string>> &board, vector<vector<string>> &ans, int cnt, int row, int n){
-        if(cnt == n){
-             vector<string> temp;
-            for (auto &r : board) {
-                string s = "";
-                for (auto &c : r) {
-                    s += c;
-                }
-                temp.push_back(s);
-            }
-            ans.push_back(temp);
+
+    void help(int row, vector<string> &board){
+        if(row == board.size()){
+            ans.push_back(board);
             return;
         }
-        if(row >= n) return;
 
-        for(int c = 0 ; c < n ; c++){
-            if(isSafe(board, row, c)){
-                board[row][c] = "Q";
-                gen(board, ans, cnt+1, row+1, n);
-                board[row][c] = ".";
+        for(int i = 0 ; i < board.size() ; i++){
+            if(isSafe(row, i, board)){
+                board[row][i] = 'Q';
+                help(row+1, board);
+                board[row][i] = '.';
             }
         }
+    }
+
+    bool isSafe(int row, int col, vector<string> &board){
+        int n = board.size();
+        //vertical check
+        for(int i = 0 ; i < n ; i++){
+            if(board[i][col] == 'Q') return false;
+        }
+
+        // upper-left diagonal checks
+        for(int i = row, j = col ; i >= 0 && j >=0 ; i--, j--){
+            if(board[i][j]=='Q') return false;
+        }
+
+        //uper-right diagonal checks
+        for(int i = row, j = col; i >= 0 && j < n; i--, j++){
+            if(board[i][j]=='Q') return false;
+        }
+        return true;
     }
 };
