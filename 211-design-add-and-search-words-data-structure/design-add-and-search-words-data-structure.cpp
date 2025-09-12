@@ -27,7 +27,7 @@ public:
         return help(word, 0, root);
     }
 
-    bool help(string word, int i, TrieNode* node){
+    bool help(string& word, int i, TrieNode* node){
         if(i >= word.size() && node->isEnd) return true;
         if(i >= word.size()) return false;
         if(word[i]=='.'){
