@@ -1,25 +1,29 @@
 class Solution {
 public:
+    set<int> st;
     bool makesquare(vector<int>& mt) {
         int sum = 0;
         for(auto &it : mt) sum+=it;
         if(sum%4!=0) return false;
-        sort(mt.rbegin(), mt.rend());
-        int len = sum/4;
-        vector<int> sides(4, 0);
-        return help(mt, sides, len, 0);
+        int req = sum/4;
+        sort(begin(mt), end(mt));
+        return help(mt, 0, req, 0, 0);
     }
 
-    bool help(vector<int>& mt, vector<int> &sides, int len, int i){
-        if(i >= mt.size()){
-            return sides[0]==len && sides[1]==len && sides[2]==len && sides[3]==len;
+    bool help(vector<int>& mt, int i, int req, int sum, int side){
+        if(side == 3) return true;
+        if(sum == req){
+            return help(mt, 0, req, 0, side+1);
         }
+        if(i >= mt.size() || sum > req) return false;
 
-        for(int j = 0 ; j < 4 ; j++){
-            if(sides[j]+mt[i] <= len){
-                sides[j]+=mt[i];
-                if(help(mt, sides, len, i+1)) return true;
-                sides[j]-=mt[i];
+
+        for(int j = i ; j < mt.size() ; j++){
+            if(j > i && mt[j] == mt[j-1] && !st.count(j-1)) continue;
+            if(!st.count(j) && mt[i]+sum <= req){
+                st.insert(j);
+                if(help(mt, j, req, sum+mt[j], side)) return true;
+                st.erase(j);
             }
         }
         return false;
