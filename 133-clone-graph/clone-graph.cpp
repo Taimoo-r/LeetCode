@@ -22,26 +22,24 @@ public:
 class Solution {
 public:
     Node* cloneGraph(Node* node) {
-        if(!node)
-        return node;
-        unordered_map<int, Node *> mp;
-        set<int> vis;
+        if(!node) return nullptr;
+
+        unordered_map<int, Node*> mp;
         Node* copy = new Node(node->val);
-        mp[node->val] = copy;
-        dfs(node, copy, vis, mp);
+        // mp[node->val] = copy;
+
+        dfs(node, copy, mp); 
         return copy;
     }
-    void dfs(Node* node, Node* copy, set<int> &vis, unordered_map<int, Node *>& mp){
-        vis.insert(copy->val);
-        for(auto neighbor : node->neighbors){
-            if(!vis.count(neighbor->val)){
-                Node* nei = new Node(neighbor->val);
-                mp[neighbor->val] = nei;
-                copy->neighbors.push_back(nei);
-                dfs(neighbor,nei, vis, mp);
-            }
-            else{
-                copy->neighbors.push_back(mp[neighbor->val]);
+    void dfs(Node* node, Node* copy, unordered_map<int, Node*>& mp){
+        mp[copy->val] = copy;
+        for(auto &n : node->neighbors){
+            if(!mp.count(n->val)){
+                Node* c = new Node(n->val);
+                copy->neighbors.push_back(c);
+                dfs(n, c, mp);
+            } else {
+                copy->neighbors.push_back(mp[n->val]);
             }
         }
     }
