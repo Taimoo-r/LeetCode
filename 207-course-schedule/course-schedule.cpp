@@ -1,33 +1,42 @@
 class Solution {
 public:
-    bool isCycle(int root, vector<int> adj[], vector<int> &visited, vector<int> &inStack) {
-        visited[root] = true;
-        inStack[root] = true;
-
-        for(auto &neighbor : adj[root]) {
-            if(!visited[neighbor] && isCycle(neighbor, adj, visited, inStack))
-                return true;
-            else if(inStack[neighbor])
-                return true;
+    bool dfs(int node, vector<vector<int>>& adj, vector<int>& vis, vector<int>& pathVis) {
+        vis[node] = 1;
+        pathVis[node] = 1;
+        
+        for (auto neighbor : adj[node]) {
+            if (!vis[neighbor]) {
+                if (dfs(neighbor, adj, vis, pathVis))
+                    return true;  
+            }
+            else if (pathVis[neighbor]) {
+                return true;  
+            }
         }
-
-        inStack[root] = false;  // Backtrack, mark this node as no longer in recursion stack
+        
+        pathVis[node] = 0; 
         return false;
     }
 
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int> adj[numCourses];
-        for(auto &req : prerequisites) {
-            int course = req[0];
-            int prereq = req[1];
-            adj[prereq].push_back(course);  // prereq -> course
+    bool canFinish(int numCourses, vector<vector<int>>& prereq) {
+        
+        vector<vector<int>> adj(numCourses);
+
+        // build directed graph correctly: b → a
+        for (auto &e : prereq) {
+            int a = e[0];
+            int b = e[1];
+            adj[b].push_back(a);
         }
 
-        vector<int> visited(numCourses, false), inStack(numCourses, false);
-        for(int i = 0; i < numCourses; i++) {
-            if(!visited[i] && isCycle(i, adj, visited, inStack))
-                return false;  // A cycle is found, can't finish all courses
+        vector<int> vis(numCourses, 0), pathVis(numCourses, 0);
+        
+        for (int i = 0; i < numCourses; i++) {
+            if (!vis[i]) {
+                if (dfs(i, adj, vis, pathVis))
+                    return false;  
+            }
         }
-        return true;  // No cycle found, can finish all courses
+        return true;  
     }
 };
