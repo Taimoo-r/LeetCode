@@ -1,43 +1,44 @@
 class Solution {
 public:
-    vector<vector<string>> ans;
+    vector<vector<string>> res;
     vector<vector<string>> solveNQueens(int n) {
-        vector<string> board(n, string(n, '.'));
-        help(0, board);
-        return ans;
+        string fill = "";
+        for(int i = 0 ; i < n ; i++) fill+='.';
+        vector<string> v(n, fill);
+        backtrack(v, n, 0);
+        return res;
     }
 
-    void help(int row, vector<string> &board){
-        if(row == board.size()){
-            ans.push_back(board);
+    bool isSafe(vector<string> v, int n, int r, int c){
+        for(int i = 0 ; i < n ; i++){
+            if(v[i][c] == 'Q') return false;
+        }
+
+        for(int i = 0 ; i < n ; i++){
+            if(v[r][i] == 'Q') return false; 
+        }
+
+        for(int row = r-1, col = c-1 ; row >= 0 && col >= 0 ; row--, col--){
+            if(v[row][col] == 'Q') return false;
+        }
+        for(int row = r-1, col = c+1 ; row >= 0 && col < n ; row--, col++){
+            if(v[row][col] == 'Q') return false;
+        }
+        return true;
+    }
+
+    void backtrack(vector<string> v, int n, int r){
+        if(r >= n){
+            res.push_back(v);
             return;
         }
 
-        for(int i = 0 ; i < board.size() ; i++){
-            if(isSafe(row, i, board)){
-                board[row][i] = 'Q';
-                help(row+1, board);
-                board[row][i] = '.';
+        for(int col = 0 ; col < n ; col++){
+            if(isSafe(v, n, r, col)){
+                v[r][col] = 'Q';
+                backtrack(v, n, r+1);
+                v[r][col] = '.';
             }
         }
-    }
-
-    bool isSafe(int row, int col, vector<string> &board){
-        int n = board.size();
-        //vertical check
-        for(int i = 0 ; i < n ; i++){
-            if(board[i][col] == 'Q') return false;
-        }
-
-        // upper-left diagonal checks
-        for(int i = row, j = col ; i >= 0 && j >=0 ; i--, j--){
-            if(board[i][j]=='Q') return false;
-        }
-
-        //uper-right diagonal checks
-        for(int i = row, j = col; i >= 0 && j < n; i--, j++){
-            if(board[i][j]=='Q') return false;
-        }
-        return true;
     }
 };
