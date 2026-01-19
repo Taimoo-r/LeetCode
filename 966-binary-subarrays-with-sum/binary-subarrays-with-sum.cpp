@@ -5,14 +5,18 @@ public:
         int sum = 0;
         int n = nums.size();
         int cnt = 0;
-        unordered_map<int, int> mp;
-        mp[0]++;
-        for(auto &it : nums){
-            sum+=it;
-            if(mp.count(sum - goal)) cnt+=mp[sum-goal];
-            mp[sum]++;
+        int z = 0;
+        while(r < n){
+            sum+=nums[r];
+            while(l < r && (nums[l] == 0 || sum > goal) ){
+                if(nums[l] == 0) z++;
+                else z = 0;
+                sum-=nums[l];
+                l++;
+            }
+            if(sum == goal) cnt+=1+z;
+            r++;
         }
         return cnt;
-
     }
 };
