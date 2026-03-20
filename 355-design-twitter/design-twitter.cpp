@@ -1,31 +1,50 @@
+class p{
+public:
+    set<int> followers;
+    set<int> following;
+    vector<int> posts; // user’s own tweets
+};
+
 class Twitter {
 public:
-    list<pair<int, int>> l;
-    unordered_map<int, unordered_set<int>> mp; // follower -> set of followees
+    unordered_map<int, p> users;
+    int timestamp = 0;                 // global time for ordering
+    unordered_map<int,int> tweetTime;  // tweetId -> timestamp
 
-    Twitter() {}
-    
-    void postTweet(int userId, int tweetId) {
-        l.push_front({userId, tweetId});
+    Twitter() {
     }
     
-    vector<int> getNewsFeed(int userId) {
-        vector<int> tweets;
-        for(auto it = l.begin(); it != l.end() && tweets.size() < 10; ++it) {
-            if(it->first == userId || mp[userId].count(it->first)) {
-                tweets.push_back(it->second);
-            }
+    void postTweet(int uId, int tId) {
+        users[uId].posts.push_back(tId);
+        tweetTime[tId] = timestamp++;
+    }
+    
+    vector<int> getNewsFeed(int uId) {
+        vector<int> feed;
+        // collect user + followees
+        vector<int> candidates;
+        for(int tweet : users[uId].posts) candidates.push_back(tweet);
+        for(int followee : users[uId].following) {
+            for(int tweet : users[followee].posts) candidates.push_back(tweet);
         }
-        return tweets;
+        // sort tweets by timestamp descending
+        sort(candidates.begin(), candidates.end(), [&](int a, int b){
+            return tweetTime[a] > tweetTime[b];
+        });
+        // take top 10
+        for(int i = 0; i < min(10, (int)candidates.size()); i++)
+            feed.push_back(candidates[i]);
+        return feed;
     }
     
     void follow(int followerId, int followeeId) {
         if(followerId == followeeId) return;
-        mp[followerId].insert(followeeId);
+        users[followeeId].followers.insert(followerId);
+        users[followerId].following.insert(followeeId);
     }
     
     void unfollow(int followerId, int followeeId) {
-        if(followerId == followeeId) return;
-        mp[followerId].erase(followeeId);
+        users[followeeId].followers.erase(followerId);
+        users[followerId].following.erase(followeeId);
     }
 };
