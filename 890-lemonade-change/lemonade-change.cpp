@@ -7,10 +7,8 @@ public:
 
             else if(x == 10){
                 if(mp[5]==0) return false;
-                else{
-                    mp[5]--;
-                    mp[10]++;
-                }
+                else mp[5]--;
+                mp[10]++;
             }
             else if(x==20){
                     if(mp[10] == 0 && mp[5] < 3) return false;
