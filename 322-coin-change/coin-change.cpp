@@ -6,7 +6,7 @@ public:
         return ans == 1e9 ? -1 : ans;
     }
 
-    int rec(vector<int> coins, int a){
+    int rec(vector<int>& coins, int a){
         if(a == 0) return 0;
         if(mp.count(a)) return mp[a];
         int mini = 1e9;
