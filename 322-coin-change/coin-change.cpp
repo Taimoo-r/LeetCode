@@ -2,8 +2,16 @@ class Solution {
 public:
     unordered_map<int, int> mp;
     int coinChange(vector<int>& coins, int amount) {
-        int ans = rec(coins, amount);
-        return ans == 1e9 ? -1 : ans;
+        vector<int> dp(amount+1, 1e9);
+        dp[0] = 0;
+        for(int i = 1 ; i <= amount ; i++){
+            for(auto &c : coins){
+                if(i-c >= 0){
+                    dp[i] = min(dp[i], dp[i-c]+1);
+                }
+            }
+        }
+        return dp[amount] == 1e9 ? -1 : dp[amount];
     }
 
     int rec(vector<int>& coins, int a){
