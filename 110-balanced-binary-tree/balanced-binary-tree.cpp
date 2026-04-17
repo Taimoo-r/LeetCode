@@ -17,7 +17,7 @@ public:
         return is;
     }
     int rec(TreeNode* root){
-        if(!root || !is) return 0;
+        if(!root) return 0;
         int l = rec(root->left);
         int r = rec(root->right);
 
