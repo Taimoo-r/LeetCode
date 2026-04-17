@@ -11,21 +11,18 @@
  */
 class Solution {
 public:
-    int ans = 0;
+    int maxi = 0;
     int diameterOfBinaryTree(TreeNode* root) {
         if(!root) return 0;
-
-        int l = rec(root->left);
-        int r = rec(root->right);
-        return max(ans, 1+r+l)-1; 
+        rec(root);
+        return maxi;
+        // here basically we're returning the sum of max depth of left & right.
     }
     int rec(TreeNode* root){
         if(!root) return 0;
         int l = rec(root->left);
         int r = rec(root->right);
-
-        ans = max(ans, 1+l+r);
-        return 1+max(l, r);
-
+        maxi = max(maxi, l+r);
+        return max(l, r)+1;
     }
 };
