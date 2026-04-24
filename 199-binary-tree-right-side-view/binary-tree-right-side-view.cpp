@@ -1,4 +1,4 @@
-/**
+ /**
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
@@ -13,24 +13,19 @@ class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {
         if(!root) return {};
+        stack<pair<TreeNode*, int>> st;
+        st.push({root, 0});
+        unordered_set<int> s;
         vector<int> ans;
-        queue<pair<TreeNode*, int>> q;
-        q.push({root, 0});
-        map<int, int> mp;
-        mp[0] = root->val;
-        while(!q.empty()){
-            pair<TreeNode*,int> top = q.front();
-            q.pop();
-            if(top.first->left){
-                q.push({top.first->left, top.second+1});
-                mp[top.second+1] = top.first->left->val;
-            } 
-            if(top.first->right){
-                q.push({top.first->right, top.second+1});
-                mp[top.second+1] = top.first->right->val;
-            } 
+        while(!st.empty()){
+            TreeNode* node = st.top().first;
+            int lev = st.top().second;
+            st.pop();
+            if(!s.count(lev)) ans.push_back(node->val);
+            s.insert(lev);
+            if(node->left) st.push({node->left, lev+1});
+            if(node->right) st.push({node->right, lev+1});
         }
-        for(auto &[a,it] : mp) ans.push_back(it);
         return ans;
     }
 };
