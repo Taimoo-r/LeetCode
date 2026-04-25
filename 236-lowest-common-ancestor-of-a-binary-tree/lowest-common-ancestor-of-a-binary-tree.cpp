@@ -31,8 +31,6 @@ public:
         if((l || r) && (root == p || root == q)) ans = root;
         if(root == p || root == q || l || r) return true;
         return false;
-
-
         // if(root == p){
         //     P = true;
         //     if(!Q) first = 0;
