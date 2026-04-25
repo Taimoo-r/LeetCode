@@ -31,8 +31,6 @@ public:
             }
             if(v.size()%2!=0) return false;
             // reverse(v.begin()+v.size()/2, v.end());
-            for(auto &x : v) cout<<x<<" ";
-            cout<<endl;
             int i = 0, j = v.size()-1;
             while(i <= j){
                 if(v[i]!=v[j]) return false;
