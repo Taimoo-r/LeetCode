@@ -7,60 +7,69 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Codec {
-public:
     // Encodes a tree to a single string.
-    string serialize(TreeNode* root) {
-    if (!root) return "";
-    queue<TreeNode*> q;
-    q.push(root);
-    string serialized;
-
-    while (!q.empty()) {
-        TreeNode* node = q.front(); q.pop();
-        if (node) {
-            serialized += to_string(node->val) + ",";
-            q.push(node->left);
-            q.push(node->right);
-        } else {
-            serialized += "#,";
-        }
-    }
-    return serialized;
-}
-
-
-    // Decodes your encoded data to tree.
-    TreeNode* deserialize(string data) {
-    if (data.empty()) return nullptr;
-    stringstream ss(data);
-    string token;
-    getline(ss, token, ',');
-    TreeNode* root = new TreeNode(stoi(token));
-    queue<TreeNode*> q;
-    q.push(root);
-
-    while (!q.empty()) {
-        TreeNode* node = q.front(); q.pop();
-
-        // Left child
-        if (getline(ss, token, ',')) {
-            if (token != "#") {
-                node->left = new TreeNode(stoi(token));
-                q.push(node->left);
+    #include<string>
+class Codec{
+public:
+    int i = 0;
+    string s = "";
+    string serialize(TreeNode* root){
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            TreeNode* top = q.front(); q.pop();
+            if(top==nullptr){
+                s+="N&";
+            } else {
+                s = s+to_string(top->val)+"&";
+                if(top->left) q.push(top->left);
+                else q.push(nullptr);
+                if(top->right) q.push(top->right);
+                else q.push(nullptr);
             }
         }
+        return s;
+    }
 
-        // Right child
-        if (getline(ss, token, ',')) {
-            if (token != "#") {
-                node->right = new TreeNode(stoi(token));
-                q.push(node->right);
+    int getN(){
+        string n = "";
+        if(s[i]=='N') {
+            i+=2;
+            return 1001;
+        }
+        for(i ; i < s.size() ; i++){
+            if(s[i]=='&'){
+                i++;
+                break;
+            }
+            n+=s[i];
+        }
+        return std::stoi(n);
+    }
+    // Decodes your encoded dazta to tree.
+    TreeNode* deserialize(string data){
+        s = data;
+        queue<TreeNode*> q;
+        int rot = getN();
+        if(rot == 1001) return nullptr;
+        TreeNode* root = new TreeNode(rot);
+        q.push(root);
+        while(!q.empty()){
+            TreeNode* top = q.front(); q.pop();
+            int l = getN();
+            int r = getN();
+            if(l != 1001){
+                top->left = new TreeNode(l);
+                q.push(top->left);
+            }
+            if(r != 1001){
+                top->right = new TreeNode(r);
+                q.push(top->right);
             }
         }
+        i = 0;
+        return root;
     }
-    return root;
-}
 };
 
 // Your Codec object will be instantiated and called as such:
