@@ -10,16 +10,15 @@
  * };
  */
 class Solution {
-    TreeNode* prev = nullptr;
 public:
-    
     bool isValidBST(TreeNode* root) {
+        return rec(root, LONG_MIN, LONG_MAX);
+    }
+    bool rec(TreeNode* root, long low, long high){
         if(!root) return true;
 
+        if(root->val <= low || root->val >= high) return false;
 
-        if(!isValidBST(root->left)) return false;
-        if(prev && prev->val >= root->val) return false;
-        prev = root;
-        return isValidBST(root->right);
+        return rec(root->left, low, root->val) && rec(root->right, root->val, high);
     }
 };
