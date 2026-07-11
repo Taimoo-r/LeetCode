@@ -1,8 +1,3 @@
-#include <vector>
-#include <climits>
-
-using namespace std;
-
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -16,21 +11,25 @@ using namespace std;
  */
 class Solution {
 public:
-    TreeNode* bstFromPreorder(vector<int>& preorder) {
-        int index = 0;
-        return bstFromPreorderHelper(preorder, index, INT_MIN, INT_MAX);
-    }
-
-private:
-    TreeNode* bstFromPreorderHelper(const vector<int>& preorder, int& index, int lower, int upper) {
-        if (index >= preorder.size() || preorder[index] < lower || preorder[index] > upper) {
-            return nullptr;
+    TreeNode* bstFromPreorder(vector<int>& pre) {
+        TreeNode* root = new TreeNode(pre[0]);
+        for(int i = 1; i < pre.size() ; i++){
+            rec(pre[i], root);
         }
-
-        int val = preorder[index++];
-        TreeNode* root = new TreeNode(val);
-        root->left = bstFromPreorderHelper(preorder, index, lower, val);
-        root->right = bstFromPreorderHelper(preorder, index, val, upper);
         return root;
+    }
+    void rec(int val, TreeNode* root){
+        if(val < root->val){
+            if(root->left) rec(val, root->left);
+            else {
+                root->left = new TreeNode(val); return;
+            }
+        }
+        if(val > root->val){
+            if(root->right) rec(val, root->right);
+            else {
+                root->right = new TreeNode(val); return;
+            }
+        }
     }
 };
