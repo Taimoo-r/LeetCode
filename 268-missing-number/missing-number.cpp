@@ -1,11 +1,14 @@
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        unordered_set<int> s(nums.begin(),nums.end());
-        for(int i=0;i<nums.size();i++){
-            if(!s.count(i))
-            return i;
+        int n = nums.size();
+
+        int sum = (n*(1+n))/2;
+        int csum = 0;
+        for(auto &it : nums){
+            csum+=it;
         }
-        return nums.size();
+        cout<<sum<<" "<<csum;
+        return sum-csum;
     }
 };
